@@ -59,7 +59,7 @@ export function JobUpdate(props) {
   };
 
   const resetForm = () => {
-    setSelectedCategory(""); // Reset to empty or default if needed
+    setSelectedCategory("");
     setTitle("");
     setDescription("");
   };
@@ -82,7 +82,6 @@ export function JobUpdate(props) {
   }, [getToken]);
 
   const handleSubmitJob = async () => {
-    // Update existing job
     const res = await axios.put(
       `http://localhost:8001/api/v1/job/${jobId}`,
       {
@@ -107,9 +106,9 @@ export function JobUpdate(props) {
   };
 
   useEffect(() => {
-    getCategoryList(); // Fetch categories once
+    getCategoryList();
     if (jobId) {
-      jobDetails(); // Fetch job details if jobId exists
+      jobDetails();
     }
   }, [getCategoryList, jobId, jobDetails]);
 

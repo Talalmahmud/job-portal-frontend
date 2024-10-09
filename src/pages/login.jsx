@@ -12,7 +12,6 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-// TabPanel component to render the content of the selected tab
 const TabPanel = ({ children, value, index }) => {
   return (
     <div role="tabpanel" hidden={value !== index}>
@@ -50,12 +49,9 @@ const LoginSignUpTabs = () => {
         );
         const resData = response.data;
 
-        // Log the response data (typically includes token or user info)
-        console.log(resData); // "Login successful"
         localStorage.setItem("token", JSON.stringify(resData?.token));
 
-        // Navigate to the dashboard or home after successful login
-        navigate("/job"); // Change to the desired route
+        navigate("/job");
       } catch (error) {
         console.error(
           "Login failed:",
@@ -106,8 +102,6 @@ const LoginSignUpTabs = () => {
 
   // Signup Form
   const SignUpForm = () => {
-    const navigate = useNavigate();
-
     const [signUpData, setSignUpData] = useState({
       firstName: "",
       lastName: "",

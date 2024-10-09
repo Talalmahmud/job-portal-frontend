@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SimpleAccordion from "../components/Accordion";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { SimpleDialog } from "../components/JobCreate";
+import { JobCreate } from "../components/JobCreate";
 import axios from "axios";
 
 const Job = () => {
@@ -48,11 +48,11 @@ const Job = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh", // Full viewport height to center vertically
-        backgroundColor: "#f5f5f5", // Light background color for better contrast
-        padding: 4, // Adds space around the content
-        borderRadius: 2, // Rounded corners for the container
-        boxShadow: 3, // Subtle shadow for depth
+        minHeight: "100vh",
+        backgroundColor: "#f5f5f5",
+        padding: 4,
+        borderRadius: 2,
+        boxShadow: 3,
       }}
     >
       <Typography variant="h4" component="h1" gutterBottom>
@@ -81,7 +81,7 @@ const Job = () => {
         jobList={joblist}
       />
 
-      <SimpleDialog fetchData={getJobList} open={open} onClose={handleClose} />
+      <JobCreate fetchData={getJobList} open={open} onClose={handleClose} />
     </Box>
   );
 };

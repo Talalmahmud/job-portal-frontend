@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-export function SimpleDialog(props) {
+export function JobCreate(props) {
   const { onClose, open, fetchData, jobId } = props;
 
   const [categoryList, setCategoryList] = useState([]);
@@ -26,7 +26,7 @@ export function SimpleDialog(props) {
 
   const jobDetails = useCallback(async () => {
     if (jobId !== "") {
-      console.log(jobId); // Ensure jobId is being logged
+      console.log(jobId);
       try {
         const res = await axios.get(
           `http://localhost:8001/api/v1/job/${jobId}`,
@@ -37,9 +37,8 @@ export function SimpleDialog(props) {
           }
         );
         const job = res.data;
-        console.log("Fetched Job Details:", job); // Debugging log to check response structure
+        console.log("Fetched Job Details:", job);
 
-        // Ensure the job data contains what you're trying to set
         if (job && job.category && job.title && job.description) {
           setSelectedCategory(job.category);
           setTitle(job.title);
@@ -59,7 +58,7 @@ export function SimpleDialog(props) {
   };
 
   const resetForm = () => {
-    setSelectedCategory(""); // Reset to empty or default if needed
+    setSelectedCategory("");
     setTitle("");
     setDescription("");
   };
@@ -91,7 +90,6 @@ export function SimpleDialog(props) {
     try {
       let res;
       if (jobId) {
-        // Update existing job
         res = await axios.put(
           `http://localhost:8001/api/v1/job/${jobId}`,
           {
@@ -108,7 +106,6 @@ export function SimpleDialog(props) {
         const resData = res.data;
         setSnackbarMessage("Job updated successfully!");
       } else {
-        // Add new job
         res = await axios.post(
           "http://localhost:8001/api/v1/job",
           {
@@ -143,9 +140,9 @@ export function SimpleDialog(props) {
   };
 
   useEffect(() => {
-    getCategoryList(); // Fetch categories once
+    getCategoryList();
     if (jobId) {
-      jobDetails(); // Fetch job details if jobId exists
+      jobDetails();
     }
   }, [getCategoryList, jobId, jobDetails]);
 

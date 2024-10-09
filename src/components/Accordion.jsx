@@ -17,7 +17,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit"; // Import Edit Icon
 import DeleteIcon from "@mui/icons-material/Delete"; // Import Delete Icon
-import { SimpleDialog } from "./JobCreate"; // Assuming SimpleDialog is exported from JobCreate
+import { JobCreate } from "./JobCreate"; // Assuming SimpleDialog is exported from JobCreate
 import axios from "axios"; // Assuming axios is used for API calls
 import { JobUpdate } from "./JobUpdate";
 
@@ -38,7 +38,6 @@ const JobAccordion = ({
     setExpanded(isExpanded ? panel : false);
   };
 
-  
   const updateEdit = (jItem) => {
     setJobId(jItem?._id); // Set job ID to the selected job's ID
     setEditOpen(true); // Open the dialog
@@ -131,7 +130,7 @@ const JobAccordion = ({
         jobId={jobId}
         fetchData={fetchData}
       />
-      <SimpleDialog open={open} onClose={onClose} jobId={jobId} />
+      <JobCreate open={open} onClose={onClose} jobId={jobId} />
 
       {/* Delete Confirmation Dialog */}
       <Dialog

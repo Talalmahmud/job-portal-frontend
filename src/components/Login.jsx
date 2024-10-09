@@ -10,13 +10,11 @@ import {
 
 const Login = () => {
   const [formData, setFormData] = useState({
-  
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-
     email: "",
     password: "",
   });
@@ -59,7 +57,6 @@ const Login = () => {
     e.preventDefault();
     if (validateForm()) {
       console.log("Form Data: ", formData);
-      // Perform the signup logic here (e.g., send data to API)
     }
   };
 
