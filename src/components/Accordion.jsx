@@ -19,6 +19,7 @@ import EditIcon from "@mui/icons-material/Edit"; // Import Edit Icon
 import DeleteIcon from "@mui/icons-material/Delete"; // Import Delete Icon
 import { SimpleDialog } from "./JobCreate"; // Assuming SimpleDialog is exported from JobCreate
 import axios from "axios"; // Assuming axios is used for API calls
+import { JobUpdate } from "./JobUpdate";
 
 const JobAccordion = ({
   jobList,
@@ -31,14 +32,16 @@ const JobAccordion = ({
   const [jobId, setJobId] = useState(""); // State to hold the job ID
   const [deleteJobId, setDeleteJobId] = useState(""); // State to hold the job ID for deletion
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false); // State to control delete confirmation dialog
+  const [editOpen, setEditOpen] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const handleEdit = (jItem) => {
+  
+  const updateEdit = (jItem) => {
     setJobId(jItem?._id); // Set job ID to the selected job's ID
-    handleClickOpen(); // Open the dialog
+    setEditOpen(true); // Open the dialog
   };
 
   const handleDelete = (jItem) => {
@@ -109,7 +112,7 @@ const JobAccordion = ({
                   {jItem?.title}
                 </Link>
                 <Box>
-                  <IconButton onClick={() => handleEdit(jItem)}>
+                  <IconButton onClick={() => updateEdit(jItem)}>
                     <EditIcon color="primary" />
                   </IconButton>
                   <IconButton onClick={() => handleDelete(jItem)}>
@@ -122,6 +125,12 @@ const JobAccordion = ({
         </Accordion>
       ))}
       {/* Ensure onClose is passed correctly to close the dialog */}
+      <JobUpdate
+        open={editOpen}
+        onClose={() => setEditOpen(false)}
+        jobId={jobId}
+        fetchData={fetchData}
+      />
       <SimpleDialog open={open} onClose={onClose} jobId={jobId} />
 
       {/* Delete Confirmation Dialog */}
@@ -134,8 +143,7 @@ const JobAccordion = ({
         <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this job? This action cannot be
-            undone.
+            Are you sure you want to delete this job?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

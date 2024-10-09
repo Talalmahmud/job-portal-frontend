@@ -23,7 +23,6 @@ const TabPanel = ({ children, value, index }) => {
 
 const LoginSignUpTabs = () => {
   const [tabValue, setTabValue] = useState(0);
-  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -135,7 +134,7 @@ const LoginSignUpTabs = () => {
         localStorage.setItem("token", JSON.stringify(resData?.token));
 
         // Navigate to the dashboard or home after successful login
-        navigate("/login"); // Change to the desired route
+        setTabValue(0);
       } catch (error) {
         console.error(
           "Login failed:",

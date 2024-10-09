@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-export function SimpleDialog(props) {
+export function JobUpdate(props) {
   const { onClose, open, fetchData, jobId } = props;
 
   const [categoryList, setCategoryList] = useState([]);
@@ -82,60 +82,24 @@ export function SimpleDialog(props) {
   }, [getToken]);
 
   const handleSubmitJob = async () => {
-    if (!selectedCategory || !title || !description) {
-      setSnackbarMessage("Please fill all fields.");
-      setOpenSnackbar(true);
-      return;
-    }
-
-    try {
-      let res;
-      if (jobId) {
-        // Update existing job
-        res = await axios.put(
-          `http://localhost:8001/api/v1/job/${jobId}`,
-          {
-            category: selectedCategory,
-            title: title,
-            description: description,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${getToken}`,
-            },
-          }
-        );
-        const resData = res.data;
-        setSnackbarMessage("Job updated successfully!");
-      } else {
-        // Add new job
-        res = await axios.post(
-          "http://localhost:8001/api/v1/job",
-          {
-            category: selectedCategory,
-            title: title,
-            description: description,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${getToken}`,
-            },
-          }
-        );
-        const resData = res.data;
-        setSnackbarMessage("Job added successfully!");
+    // Update existing job
+    const res = await axios.put(
+      `http://localhost:8001/api/v1/job/${jobId}`,
+      {
+        category: selectedCategory,
+        title: title,
+        description: description,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${getToken}`,
+        },
       }
-
-      setOpenSnackbar(true);
-      fetchData();
-      handleClose();
-    } catch (error) {
-      console.error("Error saving job:", error);
-      setSnackbarMessage(
-        jobId ? "Failed to update job." : "Failed to add job."
-      );
-      setOpenSnackbar(true);
-    }
+    );
+    const resData = res.data;
+    setSnackbarMessage("Job updated successfully!");
+    onClose();
+    fetchData();
   };
 
   const handleSnackbarClose = () => {
@@ -162,9 +126,7 @@ export function SimpleDialog(props) {
       onClose={handleClose}
       open={open}
     >
-      <DialogTitle>
-        {jobId ? "Edit Job" : "Add Job"} {typeof jobId}
-      </DialogTitle>
+      <DialogTitle>Edit Job {typeof jobId}</DialogTitle>
 
       <FormControl fullWidth variant="outlined" sx={{ mb: 2 }}>
         <InputLabel id="category-select-label">Category</InputLabel>

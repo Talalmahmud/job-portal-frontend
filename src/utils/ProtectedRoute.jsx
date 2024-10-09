@@ -11,7 +11,6 @@ const ProtectedRoute = () => {
       try {
         // Get token from localStorage
         const getToken = JSON.parse(localStorage.getItem("token"));
-        console.log(getToken);
 
         // Check if the token exists
         if (getToken !== "" || getToken !== undefined) {
