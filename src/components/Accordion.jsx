@@ -50,11 +50,16 @@ const JobAccordion = ({
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8001/api/v1/job/${deleteJobId}`, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        },
-      });
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/job/${deleteJobId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
       fetchData(); // Fetch the updated data after deletion
       setOpenDeleteDialog(false); // Close the confirmation dialog
     } catch (error) {

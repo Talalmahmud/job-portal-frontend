@@ -69,11 +69,14 @@ export function JobCreate(props) {
 
   const getCategoryList = useCallback(async () => {
     try {
-      const res = await axios.get("http://localhost:8001/api/v1/category", {
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/category`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken}`,
+          },
+        }
+      );
       setCategoryList(res.data.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -91,7 +94,7 @@ export function JobCreate(props) {
       let res;
 
       res = await axios.post(
-        "http://localhost:8001/api/v1/job",
+        `${process.env.REACT_APP_BASE_URL}/job`,
         {
           category: selectedCategory,
           title: title,
