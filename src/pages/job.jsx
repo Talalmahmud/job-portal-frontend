@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SimpleAccordion from "../components/Accordion";
+import JobAccordion from "../components/Accordion";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { JobCreate } from "../components/JobCreate";
@@ -46,7 +46,7 @@ const Job = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+
         alignItems: "center",
         minHeight: "100vh",
         backgroundColor: "#f5f5f5",
@@ -73,7 +73,7 @@ const Job = () => {
         </Button>
       </Box>
 
-      <SimpleAccordion
+      <JobAccordion
         fetchData={getJobList}
         open={open}
         onClose={handleClose}

@@ -24,33 +24,33 @@ export function JobCreate(props) {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const getToken = JSON.parse(localStorage.getItem("token"));
 
-  const jobDetails = useCallback(async () => {
-    if (jobId !== "") {
-      console.log(jobId);
-      try {
-        const res = await axios.get(
-          `http://localhost:8001/api/v1/job/${jobId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${getToken}`,
-            },
-          }
-        );
-        const job = res.data;
-        console.log("Fetched Job Details:", job);
+  //   const jobDetails = useCallback(async () => {
+  //     if (jobId !== "") {
+  //       console.log(jobId);
+  //       try {
+  //         const res = await axios.get(
+  //           `http://localhost:8001/api/v1/job/${jobId}`,
+  //           {
+  //             headers: {
+  //               Authorization: `Bearer ${getToken}`,
+  //             },
+  //           }
+  //         );
+  //         const job = res.data;
+  //         console.log("Fetched Job Details:", job);
 
-        if (job && job.category && job.title && job.description) {
-          setSelectedCategory(job.category);
-          setTitle(job.title);
-          setDescription(job.description);
-        } else {
-          console.error("Missing fields in job data:", job);
-        }
-      } catch (error) {
-        console.error("Error fetching job details:", error);
-      }
-    }
-  }, [jobId, getToken]);
+  //         if (job && job.category && job.title && job.description) {
+  //           setSelectedCategory(job.category);
+  //           setTitle(job.title);
+  //           setDescription(job.description);
+  //         } else {
+  //           console.error("Missing fields in job data:", job);
+  //         }
+  //       } catch (error) {
+  //         console.error("Error fetching job details:", error);
+  //       }
+  //     }
+  //   }, [jobId, getToken]);
 
   const handleClose = () => {
     onClose();
@@ -89,39 +89,22 @@ export function JobCreate(props) {
 
     try {
       let res;
-      if (jobId) {
-        res = await axios.put(
-          `http://localhost:8001/api/v1/job/${jobId}`,
-          {
-            category: selectedCategory,
-            title: title,
-            description: description,
+
+      res = await axios.post(
+        "http://localhost:8001/api/v1/job",
+        {
+          category: selectedCategory,
+          title: title,
+          description: description,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${getToken}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${getToken}`,
-            },
-          }
-        );
-        const resData = res.data;
-        setSnackbarMessage("Job updated successfully!");
-      } else {
-        res = await axios.post(
-          "http://localhost:8001/api/v1/job",
-          {
-            category: selectedCategory,
-            title: title,
-            description: description,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${getToken}`,
-            },
-          }
-        );
-        const resData = res.data;
-        setSnackbarMessage("Job added successfully!");
-      }
+        }
+      );
+      const resData = res.data;
+      setSnackbarMessage(resData?.message);
 
       setOpenSnackbar(true);
       fetchData();
@@ -141,10 +124,7 @@ export function JobCreate(props) {
 
   useEffect(() => {
     getCategoryList();
-    if (jobId) {
-      jobDetails();
-    }
-  }, [getCategoryList, jobId, jobDetails]);
+  }, [getCategoryList]);
 
   return (
     <Dialog

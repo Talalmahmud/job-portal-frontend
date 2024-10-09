@@ -26,7 +26,6 @@ export function JobUpdate(props) {
 
   const jobDetails = useCallback(async () => {
     if (jobId !== "") {
-      console.log(jobId); // Ensure jobId is being logged
       try {
         const res = await axios.get(
           `http://localhost:8001/api/v1/job/${jobId}`,
@@ -37,16 +36,12 @@ export function JobUpdate(props) {
           }
         );
         const job = res.data;
-        console.log("Fetched Job Details:", job); // Debugging log to check response structure
 
         // Ensure the job data contains what you're trying to set
-        if (job && job.category && job.title && job.description) {
-          setSelectedCategory(job.category);
-          setTitle(job.title);
-          setDescription(job.description);
-        } else {
-          console.error("Missing fields in job data:", job);
-        }
+
+        setSelectedCategory(job.category);
+        setTitle(job.title);
+        setDescription(job.description);
       } catch (error) {
         console.error("Error fetching job details:", error);
       }
@@ -96,7 +91,7 @@ export function JobUpdate(props) {
       }
     );
     const resData = res.data;
-    setSnackbarMessage("Job updated successfully!");
+    setSnackbarMessage(resData?.message);
     onClose();
     fetchData();
   };
@@ -107,7 +102,7 @@ export function JobUpdate(props) {
 
   useEffect(() => {
     getCategoryList();
-    if (jobId) {
+    if (jobId !== "") {
       jobDetails();
     }
   }, [getCategoryList, jobId, jobDetails]);

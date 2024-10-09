@@ -38,7 +38,7 @@ const JobAccordion = ({
     setExpanded(isExpanded ? panel : false);
   };
 
-  const updateEdit = (jItem) => {
+  const updateItem = (jItem) => {
     setJobId(jItem?._id); // Set job ID to the selected job's ID
     setEditOpen(true); // Open the dialog
   };
@@ -83,18 +83,22 @@ const JobAccordion = ({
             expandIcon={<AddIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
-            sx={{
-              borderTop: "0px",
-              borderRight: "0px",
-              borderLeft: "0px",
-              borderBottom: "2px",
-              borderColor: "red",
-              borderStyle: "solid",
-            }}
+            sx={{}}
           >
             <Typography>{item?.title}</Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{ display: "flex", flexDirection: "column" }}>
+          <AccordionDetails
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              borderRight: "0px",
+              borderLeft: "0px",
+              borderBottom: "0px",
+              borderTop: "1px",
+              borderStyle: "solid",
+              borderColor: "green",
+            }}
+          >
             {item?.jobs?.map((jItem, jIndex) => (
               <Box
                 key={jIndex}
@@ -103,15 +107,15 @@ const JobAccordion = ({
                   justifyContent: "space-between",
                   alignItems: "center",
                   width: "100%",
-                  padding: "8px",
-                  borderBottom: "1px solid #ccc", // Optional: to separate job items
+                  padding: "4px",
+                  // Optional: to separate job items
                 }}
               >
                 <Link to={"/"} style={{ flexGrow: 1 }}>
-                  {jItem?.title}
+                  {jIndex + 1}.{jItem?.title}
                 </Link>
                 <Box>
-                  <IconButton onClick={() => updateEdit(jItem)}>
+                  <IconButton onClick={() => updateItem(jItem)}>
                     <EditIcon color="primary" />
                   </IconButton>
                   <IconButton onClick={() => handleDelete(jItem)}>
