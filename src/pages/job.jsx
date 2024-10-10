@@ -20,7 +20,7 @@ const Job = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   const getJobList = async () => {
