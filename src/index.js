@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/login";
 import Job from "./pages/job";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import Jobdetials from "./pages/jobdetails";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,6 +16,7 @@ root.render(
         <Route element={<Login />} path="/login" root />
         <Route element={<ProtectedRoute />}>
           <Route element={<Job />} path="/job" />
+          <Route element={<Jobdetials />} path="/jobdetails/:id" />
         </Route>
       </Routes>
     </BrowserRouter>

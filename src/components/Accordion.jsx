@@ -116,7 +116,7 @@ const JobAccordion = ({
                   // Optional: to separate job items
                 }}
               >
-                <Link to={"/"} style={{ flexGrow: 1 }}>
+                <Link to={"/jobdetails/" + jItem?._id} style={{ flexGrow: 1 }}>
                   {jIndex + 1}.{jItem?.title}
                 </Link>
                 <Box>
